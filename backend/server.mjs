@@ -1,6 +1,9 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
+// Middleware
+app.use(cors()); // Allow cross-origin requests
 app.use(express.json()); // Parse JSON requests
 
 const PORT = 3000;
