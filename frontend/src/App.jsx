@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
-import 'tailwindcss/tailwind.css' // Ensure Tailwind CSS is imported
 
 const API_URL = 'http://localhost:3000/api/users'
 
@@ -12,7 +11,6 @@ function App() {
  async function fetchUsers(){
     const response = await axios.get(API_URL)
     const content = response.data
-    
     setUsers(content.data)
  }
 
@@ -54,7 +52,7 @@ function App() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">CRUD Operations</h1>
+      <h1 className="text-2xl font-bold mb-4">CRUD Operations with Express & React</h1>
       <div className="mb-4 flex items-center">
         <input
           type="text"
