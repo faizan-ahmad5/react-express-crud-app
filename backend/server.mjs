@@ -45,19 +45,15 @@ app.get("/api/users", (req, res) => {
 // Post Request
 app.post("/api/users", (req, res) => {
   try {
-    const { id, name, email, age } = req.body;
+    const body = req.body;
 
-    if (!id || !name || !email || !age) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+    const newUser = {
+      id: users.length + 1,
+      ...body,
+    };
 
-    const existingUser = users.find((user) => user.id === id);
-    if (existingUser) {
-      return res.status(400).json({ message: "User ID must be unique" });
-    }
-    const newUser = { id, name, email, age };
     users.push(newUser);
-    res.status(201).json({ message: "User added successfully", newUser });
+    res.status(201).json({ message: "New user created!", data: newUser });
   } catch (error) {
     res
       .status(500)
