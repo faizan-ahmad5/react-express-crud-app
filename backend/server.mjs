@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+app.use(express.json()); // Parse JSON requests
 
 const PORT = 3000;
 
@@ -75,6 +76,27 @@ app.put("/api/users/:id", (req, res) => {
       res.status(200).json({
         message: `PUT request - Updating user ${userId}`,
         data: users[index],
+      });
+    } else {
+      res.status(404).json({ message: `User with ID ${userId} not found` });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
+  }
+});
+
+// Delete Request
+app.delete("/api/users/:id", (req, res) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    const index = users.findIndex((user) => user.id === userId);
+    if (index !== -1) {
+      const deletedUser = users.splice(index, 1);
+      res.status(200).json({
+        message: `DELETE request - Deleting user ${userId}`,
+        deletedUser,
       });
     } else {
       res.status(404).json({ message: `User with ID ${userId} not found` });
