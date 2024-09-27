@@ -38,6 +38,28 @@ app.get("/api/users", (req, res) => {
   }
 });
 
+app.post("/api/users", (req, res) => {
+  try {
+    const { id, name, email, age } = req.body;
+
+    if (!id || !name || !email || !age) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const existingUser = users.find((user) => user.id === id);
+    if (existingUser) {
+      return res.status(400).json({ message: "User ID must be unique" });
+    }
+    const newUser = { id, name, email, age };
+    users.push(newUser);
+    res.status(201).json({ message: "User added successfully", newUser });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
